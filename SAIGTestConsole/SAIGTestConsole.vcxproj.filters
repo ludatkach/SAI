@@ -30,6 +30,9 @@
     <ClCompile Include="SAI.cpp">
       <Filter>SAI</Filter>
     </ClCompile>
+    <ClCompile Include="GTestConsole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SAI.h">

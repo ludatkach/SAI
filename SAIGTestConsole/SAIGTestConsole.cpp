@@ -5,7 +5,7 @@
 #include "SAI.h"
 
 
-TEST(SAI, Exception_throw)
+TEST(SAI, Exception_throw_bad_alloc)
 {
 	class TestA : public A
 	{
@@ -18,16 +18,15 @@ TEST(SAI, Exception_throw)
 	protected:
 		virtual void do_stuff_internal(size_t size)
 		{
-			std::cout << "Testing std::bad_alloc exception" << std::endl;
 			throw std::bad_alloc();
-			//throw std::exception();
 		}
 	};
 
 	TestA tA(10);
 	EXPECT_THROW(tA.test_do_stuff_internal(80), std::bad_alloc);
 }
-TEST(SAI, Exception_catch)
+
+TEST(SAI, Exception_catch_bad_alloc)
 {
 	class TestA : public A
 	{
@@ -36,14 +35,30 @@ TEST(SAI, Exception_catch)
 	protected:
 		virtual void do_stuff_internal(size_t size)
 		{
-			std::cout << "Testing std::bad_alloc exception" << std::endl;
 			throw std::bad_alloc();
-			//throw std::exception();
 		}
 	};
 
 	TestA tA(10);
 	EXPECT_NO_THROW(tA.do_stuff(80));
+}
+
+TEST(SAI, Exception_catch_overflow_error)
+{
+	class TestA : public A
+	{
+	public:
+		TestA(int n) : A(n) {};
+	protected:
+		virtual void do_stuff_internal(size_t size)
+		{
+			throw std::overflow_error("Testing overflow_error");
+		}
+	};
+
+	TestA tA(47);
+	EXPECT_NO_THROW(tA.do_stuff(34));
+
 }
 
 TEST(SAI, fopen_test)

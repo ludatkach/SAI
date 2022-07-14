@@ -41,7 +41,18 @@ void A::do_stuff(size_t size)
 	{
 		do_stuff_internal(size);
 	}
-	catch (std::exception /*range_error*/ &e)
+
+	catch (std::bad_alloc &e)
+	{
+		ERROR(e.what());
+	}
+
+	catch (std::range_error &e)
+	{
+		ERROR(e.what());
+	}
+
+	catch (std::exception &e)
 	{
 		ERROR(e.what());
 	}
